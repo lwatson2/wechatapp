@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import axios from "axios";
 import "./FloatingLabel.css";
+
 export default class FloatingLabel extends Component {
   state = {
     userNameActive: false,
@@ -34,7 +36,12 @@ export default class FloatingLabel extends Component {
   };
   handleLogin = e => {
     e.preventDefault();
-    console.log("login successful");
+    console.log(this.props.type);
+    if (this.props.type === "register") {
+      console.log("register");
+    } else {
+      console.log("login");
+    }
   };
   render() {
     const { userNameValue, passValue, userNameActive, passActive } = this.state;
