@@ -8,7 +8,10 @@ export default class Register extends Component {
     return (
       <div>
         <p>Please regitser so that you may login</p>
-        <FloatingLabel type="register" />
+        <FloatingLabel
+          isRegistered={this.props.handleRegister}
+          type="register"
+        />
         <div>
           <p>Already registered?</p>
           <Link to="login">

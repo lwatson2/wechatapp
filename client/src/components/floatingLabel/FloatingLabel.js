@@ -34,13 +34,33 @@ export default class FloatingLabel extends Component {
     this.setState({ passValue: e.target.value });
     e.preventDefault();
   };
-  handleLogin = e => {
+  handleLogin = async e => {
+    const data = {
+      username: this.state.userNameValue,
+      password: this.state.passValue
+    };
     e.preventDefault();
     console.log(this.props.type);
+    if (this.state.passValue === "" || this.state.userNameValue === "") {
+      this.setState({ error: true, errorMsg: "All fields are required" });
+    }
+    if (this.state.passValue.length < 6) {
+      this.setState({
+        error: true,
+        errorMsg: "Password must be at least 6 characters"
+      });
+    }
     if (this.props.type === "register") {
-      console.log("register");
+      try {
+        const res = await axios.post("/users/register", data);
+        this.props.handleRegister(res.isRegistered);
+      } catch (error) {}
     } else {
-      console.log("login");
+      try {
+        const res = await axios.post("/users/login", data);
+        console.log(res);
+        this.props.handleLogin(res.data.isLoggedIn);
+      } catch (error) {}
     }
   };
   render() {

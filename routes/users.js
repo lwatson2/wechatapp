@@ -41,13 +41,15 @@ router.post("/register", (req, res) => {
 
 //Handle login
 router.post("/login", (req, res, next) => {
-  res.json({
-    isLoggedIn: true
-  });
-  passport.authenticate("local", {
-    successRedirect: "/home",
-    failureRedirect: "/users/login"
-  })(req, res, next);
+  passport.authenticate("local", (err, user, info) => {
+    if (user) {
+      res.json({
+        isLoggedIn: true
+      });
+    } else {
+      res.json({ isLoggedIn: false });
+    }
+  })(req, res);
 });
 
 //Handle logout
