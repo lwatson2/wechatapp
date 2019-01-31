@@ -9,7 +9,11 @@ const ProtectedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      isLoggedIn === true ? <Component {...props} /> : <Redirect to="/login" />
+      sessionStorage.getItem("token") ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to="/login" />
+      )
     }
   />
 );
@@ -23,14 +27,9 @@ class App extends Component {
       this.setState({ isRegistered: true });
     }
   };
-  handleLogin = msg => {
-    if (msg === true) {
-      this.setState({ isLoggedIn: true });
-    }
-    console.log(msg);
-  };
 
   render() {
+    const isLoggedIn = sessionStorage.getItem("isLoggedIn");
     return (
       <BrowserRouter>
         <div>
@@ -42,9 +41,9 @@ class App extends Component {
               component={Register}
             />
             <ProtectedRoute
-              isLoggedIn={this.state.isLoggedIn}
+              isLoggedIn={isLoggedIn}
               exact
-              path="/test"
+              path="/groups"
               component={Home}
             />
             <Route

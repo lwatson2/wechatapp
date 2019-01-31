@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "./FloatingLabel.css";
+import { withRouter } from "react-router";
 
-export default class FloatingLabel extends Component {
+class FloatingLabel extends Component {
   state = {
     userNameActive: false,
     passActive: false,
@@ -53,13 +54,16 @@ export default class FloatingLabel extends Component {
     if (this.props.type === "register") {
       try {
         const res = await axios.post("/users/register", data);
+        console.log(res);
         this.props.handleRegister(res.isRegistered);
       } catch (error) {}
     } else {
       try {
         const res = await axios.post("/users/login", data);
         console.log(res);
-        this.props.handleLogin(res.data.isLoggedIn);
+        sessionStorage.setItem("token", res.data.token);
+
+        this.props.history.push("/groups");
       } catch (error) {}
     }
   };
@@ -114,3 +118,5 @@ export default class FloatingLabel extends Component {
     );
   }
 }
+
+export default withRouter(FloatingLabel);
