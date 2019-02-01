@@ -1,0 +1,20 @@
+.formDiv {
+  text-align: center;
+  position: relative;
+  top: 126px;
+  background: hsl(209, 14%, 37%);
+  width: 347px;
+  left: 300px;
+  border-radius: 6px;
+  color: hsl(209, 20%, 25%);
+}
+.p-text {
+  padding-top: 17px;
+  padding-bottom: 12px;
+}
+@media only screen and (max-width: 479px) {
+  .formDiv {
+    left: 10px;
+    width: 300px;
+  }
+}

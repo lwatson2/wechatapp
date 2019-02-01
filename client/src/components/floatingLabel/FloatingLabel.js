@@ -75,7 +75,7 @@ class FloatingLabel extends Component {
           <div className="field-group">
             <label
               onClick={() => this.activateField("userName")}
-              className={userNameActive ? "field-active" : ""}
+              className={userNameActive ? "field-active" : "formLabel"}
             >
               Username
             </label>
@@ -95,7 +95,7 @@ class FloatingLabel extends Component {
           <div className="field-group">
             <label
               onClick={() => this.activateField("pass")}
-              className={passActive ? "password-active" : ""}
+              className={passActive ? "password-active" : "formLabel"}
             >
               Password
             </label>
@@ -112,7 +112,7 @@ class FloatingLabel extends Component {
               onChange={this.handlePassChange}
             />
           </div>
-          <button>Submit</button>
+          <button className="submitBtn">Submit</button>
         </form>
       </div>
     );

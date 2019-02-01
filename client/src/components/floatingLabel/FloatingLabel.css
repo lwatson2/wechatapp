@@ -5,60 +5,80 @@ label {
   -webkit-transition: all 300ms ease-in;
 
   transition: all 300ms ease-in;
-  color: #010400;
 }
 
 .field-active {
   -webkit-transform: translateY(-25px);
   transform: translateY(-25px);
   font-size: 0.9em;
-  display: block;
-  color: #eaeaea;
 }
 
 .floating-label {
   -webkit-appearance: none !important;
   border: none;
   outline: none;
-  border-bottom: 1px solid #010400;
-  background: transparent;
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 7px;
+  box-shadow: inset 0 2px 2px hsla(0, 0%, 0%, 0.1);
 }
 .floating-label-active {
   -webkit-appearance: none !important;
   border: none;
   outline: none;
-  border-bottom: 1px solid #0099cc;
-  background: transparent;
+  border-radius: 7px;
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.formLabel {
+  padding-left: 10px;
+  padding-top: 5px;
+  position: absolute;
+  transition: all 300ms ease-in;
 }
 
-input {
-  -webkit-transition: border-bottom 300ms ease-in;
-  transition: border-bottom 300ms ease-in;
-  color: #eaeaea;
-  border-bottom: 1px solid #010400;
-}
 .password-active {
   -webkit-transform: translateY(-25px);
   transform: translateY(-25px);
   font-size: 0.9em;
-  color: #eaeaea;
 }
 .floating-password {
   -webkit-appearance: none !important;
   border: none;
   outline: none;
-  border-bottom: 1px solid #010400;
-
-  background: transparent;
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 7px;
+  box-shadow: inset 0 2px 2px hsla(0, 0%, 0%, 0.1);
 }
 .floating-password-active {
   -webkit-appearance: none !important;
   border: none;
   outline: none;
-  border-bottom: 1px solid #0099cc;
-  background: transparent;
+  border-radius: 7px;
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .field-group {
-  padding-bottom: 50px;
+  padding-bottom: 41px;
+  padding-top: 13px;
+  color: hsl(210, 20.3%, 25.1%);
+}
+.submitBtn {
+  display: inline-block;
+  width: 41%;
+  border: none;
+  outline: none;
+  background: hsl(225, 57%, 67%);
+  padding-top: 8px;
+  padding-bottom: 6px;
+  border-radius: 8px;
+  font-size: 19px;
+  color: hsl(210, 20.3%, 25.1%);
+  box-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.2);
 }
