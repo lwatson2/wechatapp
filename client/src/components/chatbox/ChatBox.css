@@ -1,0 +1,9 @@
+.chatWindow {
+  background: hotpink;
+  width: 69%;
+  height: 100vh;
+  margin: 0 auto;
+  position: absolute;
+  top: 0px;
+  left: 179px;
+}
