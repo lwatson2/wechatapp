@@ -65,8 +65,8 @@ label {
 }
 
 .field-group {
-  padding-bottom: 41px;
-  padding-top: 13px;
+  margin-bottom: 41px;
+  padding-top: 20px;
   color: hsl(210, 20.3%, 25.1%);
 }
 .submitBtn {
@@ -81,4 +81,25 @@ label {
   font-size: 19px;
   color: hsl(210, 20.3%, 25.1%);
   box-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.2);
+  transition: color 0.7s;
+  cursor: pointer;
+}
+.submitBtn:hover {
+  color: hsl(214, 15%, 91%);
+}
+.errorMsg {
+  margin: 0;
+  color: hsl(360, 82%, 62%);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 14px;
+  margin-right: 34px;
+}
+.errorDiv {
+  position: relative;
+  bottom: 15px;
+  left: 76px;
+  width: 187px;
+  background: hsl(209, 18%, 26%);
+  border-radius: 10px;
 }

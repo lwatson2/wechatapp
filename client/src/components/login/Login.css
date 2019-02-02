@@ -3,7 +3,7 @@
   position: relative;
   top: 126px;
   background: hsl(209, 14%, 37%);
-  width: 100px;
+  width: 347px;
   margin: 0 auto;
   max-width: 100%;
   height: auto;
@@ -11,9 +11,10 @@
   color: hsl(209, 20%, 25%);
   box-shadow: 0 2px 3px hsla(221, 68%, 93%, 0.1);
 }
-.p-text {
+.loginTxt {
   padding-top: 17px;
   padding-bottom: 12px;
+  font-weight: 500;
 }
 .linkWrapper {
   display: flex;
@@ -40,22 +41,22 @@
 }
 @media only screen and (min-width: 371px) and (max-width: 489px) {
   .linkWrapper {
-    padding-left: 85px;
+    padding-left: 60px;
   }
 }
 @media only screen and (min-width: 480px) and (max-width: 767px) {
   .linkWrapper {
-    padding-left: 95px;
+    padding-left: 58px;
   }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .linkWrapper {
-    padding-left: 100px;
+    padding-left: 60px;
   }
 }
 @media only screen and (min-width: 992px) {
   .linkWrapper {
-    padding-left: 100px;
+    padding-left: 70px;
   }
 }

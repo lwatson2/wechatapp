@@ -8,7 +8,9 @@ class FloatingLabel extends Component {
     userNameActive: false,
     passActive: false,
     userNameValue: "",
-    passValue: ""
+    passValue: "",
+    error: false,
+    errorMsg: ""
   };
   activateField = value => {
     {
@@ -43,32 +45,50 @@ class FloatingLabel extends Component {
     e.preventDefault();
     console.log(this.props.type);
     if (this.state.passValue === "" || this.state.userNameValue === "") {
-      this.setState({ error: true, errorMsg: "All fields are required" });
-    }
-    if (this.state.passValue.length < 6) {
+      this.setState({ error: true, errorMsg: "All fields are required." });
+    } else if (this.state.passValue.length < 6) {
       this.setState({
         error: true,
-        errorMsg: "Password must be at least 6 characters"
+        errorMsg: "Password must be at least 6 characters."
       });
-    }
-    if (this.props.type === "register") {
+    } else if (this.props.type === "register") {
       try {
         const res = await axios.post("/users/register", data);
-        console.log(res);
+        console.log(res.data);
+        if (res.data.errors) {
+          this.setState({
+            error: true,
+            errorMsg: res.data.msg
+          });
+        }
         this.props.handleRegister(res.isRegistered);
       } catch (error) {}
     } else {
       try {
         const res = await axios.post("/users/login", data);
-        console.log(res);
-        sessionStorage.setItem("token", res.data.token);
+        if (res.data.err) {
+          this.setState({
+            error: true,
+            errorMsg: res.data.err.message
+          });
+        }
+        if (res.data.token) {
+          sessionStorage.setItem("token", res.data.token);
 
-        this.props.history.push("/groups");
+          this.props.history.push("/groups");
+        }
       } catch (error) {}
     }
   };
   render() {
-    const { userNameValue, passValue, userNameActive, passActive } = this.state;
+    const {
+      userNameValue,
+      passValue,
+      userNameActive,
+      passActive,
+      error,
+      errorMsg
+    } = this.state;
     return (
       <div>
         <form onSubmit={this.handleLogin}>
@@ -92,6 +112,13 @@ class FloatingLabel extends Component {
               onChange={this.handleUserNameChange}
             />
           </div>
+          {error ? (
+            <div className="errorDiv">
+              <p className="errorMsg">{errorMsg}</p>
+            </div>
+          ) : (
+            ""
+          )}
           <div className="field-group">
             <label
               onClick={() => this.activateField("pass")}

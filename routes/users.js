@@ -17,7 +17,7 @@ router.post("/register", (req, res) => {
       //User already exists
       res.json({
         errors: true,
-        msg: "User already exists"
+        msg: "User already exists."
       });
     } else {
       const newUser = new User({
@@ -50,7 +50,7 @@ router.post("/login", (req, res, next) => {
         });
       });
     } else {
-      res.json({ isLoggedIn: false });
+      res.json({ err: info });
     }
   })(req, res);
 });

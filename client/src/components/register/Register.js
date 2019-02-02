@@ -13,10 +13,10 @@ export default class Register extends Component {
           isRegistered={this.props.handleRegister}
           type="register"
         />
-        <div>
+        <div className="linkWrapper">
           <p>Already registered?</p>
           <Link to="login">
-            <p>Click here</p>
+            <p className="linkP">Click here</p>
           </Link>
         </div>
         <Route exact path="/login" component={Login} />
