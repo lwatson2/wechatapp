@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import "./NavBar.css";
-export default class NavBar extends Component {
+import "./SideBar.css";
+export default class SideBar extends Component {
   render() {
     const groups = ["General", "Welcome", "Movies", "Games", "Tv", "Feedback"];
 

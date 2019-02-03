@@ -12,12 +12,17 @@ export default class ChatBox extends Component {
     return (
       <div className="chatWindow">
         <p>Chat window </p>
-        <div className="chatIput">
-          <input
-            type="text"
-            value={this.state.chatValue}
-            onChange={this.handleChange}
-          />
+        <div className="putToBottom">
+          <div className="chatInputContainer">
+            <input
+              type="text"
+              className="chatInput"
+              value={this.state.chatValue}
+              onChange={this.handleChange}
+              placeholder="Send a message..."
+            />
+            <button className="msgSubmitBtn">Submit</button>
+          </div>
         </div>
       </div>
     );

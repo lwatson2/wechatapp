@@ -4,6 +4,10 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Login from "./components/login/Login";
 import Home from "./components/home/Home";
 import Register from "./components/register/Register";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faBars);
 
 const ProtectedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
