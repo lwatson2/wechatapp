@@ -3,7 +3,9 @@ import "./ChatBox.css";
 
 export default class ChatBox extends Component {
   state = {
-    chatValue: ""
+    chatValue: "",
+    username: "test",
+    message: "this is a test "
   };
   handleChange = e => {
     this.setState({ chatValue: e.target.value });
@@ -11,7 +13,40 @@ export default class ChatBox extends Component {
   render() {
     return (
       <div className="chatWindow">
-        <p>Chat window </p>
+        <div className="messageWindow">
+          <div className="messageContainer">
+            <span className="userName">{this.state.username}</span>
+            <p className="message">{this.state.message}</p>
+          </div>
+          <div className="messageContainer">
+            <span className="userName">{this.state.username}</span>
+            <p className="message">{this.state.message}</p>
+          </div>
+          <div className="messageContainer">
+            <span className="userName">{this.state.username}</span>
+            <p className="message">{this.state.message}</p>
+          </div>
+          <div className="messageContainer">
+            <span className="userName">{this.state.username}</span>
+            <p className="message">{this.state.message}</p>
+          </div>
+          <div className="messageContainer">
+            <span className="userName">{this.state.username}</span>
+            <p className="message">{this.state.message}</p>
+          </div>
+          <div className="messageContainer">
+            <span className="userName">{this.state.username}</span>
+            <p className="message">{this.state.message}</p>
+          </div>
+          <div className="messageContainer">
+            <span className="userName">{this.state.username}</span>
+            <p className="message">{this.state.message}</p>
+          </div>
+          <div className="messageContainer">
+            <span className="userName">{this.state.username}</span>
+            <p className="message">{this.state.message}</p>
+          </div>
+        </div>
         <div className="putToBottom">
           <div className="chatInputContainer">
             <input

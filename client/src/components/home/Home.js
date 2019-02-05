@@ -13,7 +13,8 @@ const classes = () => ({
   drawerPaper: {
     width: 240,
     backgroundColor: "blue",
-    zIndex: 1
+    zIndex: 1,
+    height: 100 + "vh"
   }
 });
 class Home extends Component {
@@ -35,34 +36,35 @@ class Home extends Component {
     return (
       <div>
         <NavBar handleSideBar={this.handleSideBar} />
+        <div className="homeWrapper">
+          <Hidden smUp implementation="css">
+            <Drawer
+              variant="temporary"
+              open={this.state.mobileOpen}
+              anchor="left"
+              onClose={this.handleSideBar}
+              classes={{
+                paper: classes.drawerPaper
+              }}
+            >
+              <SideBar />
+            </Drawer>
+          </Hidden>
 
-        <Hidden smUp implementation="css">
-          <Drawer
-            variant="temporary"
-            open={this.state.mobileOpen}
-            anchor="left"
-            onClose={this.handleSideBar}
-            classes={{
-              paper: classes.drawerPaper
-            }}
-          >
-            <SideBar />
-          </Drawer>
-        </Hidden>
-
-        <Hidden xsDown implementation="css">
-          <Drawer
-            variant="permanent"
-            open={true}
-            className="drawer"
-            classes={{
-              paper: classes.drawerPaper
-            }}
-          >
-            <SideBar />
-          </Drawer>
-        </Hidden>
-        <ChatBox />
+          <Hidden xsDown implementation="css">
+            <Drawer
+              variant="permanent"
+              open={true}
+              className="drawer"
+              classes={{
+                paper: classes.drawerPaper
+              }}
+            >
+              <SideBar />
+            </Drawer>
+          </Hidden>
+          <ChatBox />
+        </div>
       </div>
     );
   }

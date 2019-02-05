@@ -1,29 +1,68 @@
+.putToBottom {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  min-height: 77px;
+  background: hsl(225, 57%, 67%);
+}
 .chatWindow {
   background: hsl(209, 14%, 35%);
-  width: 72%;
-  height: 100vh;
+  width: calc(100% - 241px);
+  height: 94vh;
   margin: 0 auto;
   position: absolute;
   top: 50px;
   left: 241px;
 }
+.messageContainer {
+  display: flex;
+  flex-direction: column;
+  padding-top: 12px;
+}
+.messageWindow {
+  height: 86%;
+  overflow: auto;
+}
+.userName {
+  padding-left: 17px;
+}
+
+.message {
+  display: inline-block;
+  width: 91%;
+  margin-left: 10px;
+  border-radius: 6px;
+  padding-left: 10px;
+}
 
 .msgSubmitBtn {
   padding: 0px;
-
-  border: 1px solid;
-  background: transparent;
+  margin-left: auto;
+  background: hsl(234, 62%, 26%);
   width: 72px;
+  margin-top: 15px;
   height: 34px;
+  border-radius: 6px;
+  margin-right: 8px;
+  cursor: pointer;
+  border: none;
+  color: hsl(221, 68%, 93%);
 }
 .chatInput {
-  width: 100%;
+  width: 75%;
   background: transparent;
   border: 1px solid hsl(225, 57%, 67%);
   outline: none;
-  flex: auto;
+  margin-top: 11px;
+  height: 34px;
+  font-size: 16px;
   margin-left: 13px;
   transition: all 0.7s ease;
+}
+.chatInputContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 .chatInput:focus {
   border-bottom: 1px solid white;
@@ -34,21 +73,18 @@
     left: 0;
     height: 94vh;
   }
-  .putToBottom {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    min-height: 77px;
-    background: hsl(225, 57%, 67%);
-  }
-  .chatInputContainer {
-    display: flex;
-  }
   .msgSubmitBtn {
     padding: 0px;
     margin-right: 0 auto;
-    width: 72px;
-    height: 34px;
-    margin-top: 15px;
+  }
+}
+@media only screen and (min-width: 601px) and (max-width: 991px) {
+  .chatWindow {
+    background: hsl(209, 14%, 35%);
+    height: 94vh;
+    margin: 0 auto;
+    position: absolute;
+    top: 50px;
+    left: 241px;
   }
 }
