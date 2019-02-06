@@ -14,10 +14,7 @@ require("./config/passport")(passport);
 const db = require("./config/keys").MongoURI;
 
 mongoose
-  .connect(
-    db,
-    { useNewUrlParser: true }
-  )
+  .connect(db, { useNewUrlParser: true })
   .then(() => console.log("mongo db connected"))
   .catch(err => console.log(err));
 
@@ -37,6 +34,7 @@ app.use(passport.session());
 //Routes
 
 app.use("/users", require("./routes/users"));
+app.use("/groups", require("./routes/groups"));
 
 //Port config
 

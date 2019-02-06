@@ -74,8 +74,9 @@ class FloatingLabel extends Component {
         }
         if (res.data.token) {
           sessionStorage.setItem("token", res.data.token);
+          sessionStorage.setItem("username", res.data.username);
 
-          this.props.history.push("/groups");
+          this.props.history.push("/groups/welcome");
         }
       } catch (error) {}
     }

@@ -1,9 +1,24 @@
 import React, { Component } from "react";
 import "./NavBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { withRouter } from "react-router";
 
-export default class NavBar extends Component {
+class NavBar extends Component {
+  state = {
+    currentGroupName: ""
+  };
+  componentDidMount() {
+    this.setState({ currentGroupName: this.props.match.params.groupname });
+  }
+
+  componentDidUpdate(prevState, prevProps) {
+    if (this.props.location.pathname !== prevState.location.pathname) {
+      this.setState({ currentGroupName: this.props.match.params.groupname });
+    }
+  }
+
   render() {
+    const username = sessionStorage.getItem("username");
     return (
       <div>
         <div className="move">
@@ -13,7 +28,9 @@ export default class NavBar extends Component {
           <div className="main-nav">
             <ul className="navList">
               <li className="appName">WeChat</li>
-              <li className="currentGroup">Currently in General</li>
+              <li className="currentGroup">
+                Currently in {this.state.currentGroupName}
+              </li>
             </ul>
           </div>
         </div>
@@ -21,3 +38,5 @@ export default class NavBar extends Component {
     );
   }
 }
+
+export default withRouter(NavBar);

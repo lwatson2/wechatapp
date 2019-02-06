@@ -1,9 +1,9 @@
 .putToBottom {
   position: fixed;
   bottom: 0;
-  width: 100%;
+  width: inherit;
   min-height: 77px;
-  background: hsl(225, 57%, 67%);
+  background: hsl(210, 24%, 18%);
 }
 .chatWindow {
   background: hsl(209, 14%, 35%);
@@ -38,20 +38,27 @@
 .msgSubmitBtn {
   padding: 0px;
   margin-left: auto;
-  background: hsl(234, 62%, 26%);
+  background: transparent;
   width: 72px;
   margin-top: 15px;
   height: 34px;
   border-radius: 6px;
   margin-right: 8px;
   cursor: pointer;
-  border: none;
+  border: 2px solid hsl(234, 62%, 26%);
   color: hsl(221, 68%, 93%);
+  transition: all 0.5s ease-in;
+}
+.msgSubmitBtn:hover {
+  background: hsl(234, 62%, 26%);
+}
+.msgSubmitBtn:hover:after {
+  background: transparent;
 }
 .chatInput {
   width: 75%;
   background: transparent;
-  border: 1px solid hsl(225, 57%, 67%);
+  border: 1px solid hsl(210, 24%, 18%);
   outline: none;
   margin-top: 11px;
   height: 34px;
@@ -76,6 +83,7 @@
   .msgSubmitBtn {
     padding: 0px;
     margin-right: 0 auto;
+    background: hsl(234, 62%, 26%);
   }
 }
 @media only screen and (min-width: 601px) and (max-width: 991px) {

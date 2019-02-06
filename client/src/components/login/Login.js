@@ -9,14 +9,14 @@ export default class Login extends Component {
     return (
       <div className="formDiv">
         <p className="loginTxt">Please Login so you may view your messages</p>
-        <FloatingLabel handleLogin={this.props.handleLogin} type="login" />
+        <FloatingLabel type="login" />
         <div className="linkWrapper">
           <p>Need to register?</p>
           <Link to="/">
             <p className="linkP">Click here</p>
           </Link>
         </div>
-        <Route exact path="/" componet={Register} />
+        <Route exact path="/" component={Register} />
       </div>
     );
   }

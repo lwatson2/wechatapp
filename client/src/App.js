@@ -24,7 +24,8 @@ const ProtectedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
 class App extends Component {
   state = {
     isLoggedIn: false,
-    isRegistered: false
+    isRegistered: false,
+    username: ""
   };
   handleRegister = msg => {
     if (msg === true) {
@@ -44,19 +45,9 @@ class App extends Component {
               handleRegister={this.handleRegister}
               component={Register}
             />
-            <ProtectedRoute
-              isLoggedIn={isLoggedIn}
-              exact
-              path="/groups"
-              component={Home}
-            />
-            <Route
-              exact
-              path="/login"
-              render={props => (
-                <Login {...props} handleLogin={this.handleLogin} />
-              )}
-            />
+            <ProtectedRoute exact path="/groups/:groupname" component={Home} />
+
+            <Route exact path="/login" render={props => <Login {...props} />} />
           </Switch>
         </div>
       </BrowserRouter>

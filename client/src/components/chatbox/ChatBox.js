@@ -1,14 +1,34 @@
 import React, { Component } from "react";
 import "./ChatBox.css";
+import { withRouter } from "react-router";
+import Axios from "axios";
 
-export default class ChatBox extends Component {
+class ChatBox extends Component {
   state = {
     chatValue: "",
     username: "test",
     message: "this is a test "
   };
+
+  componentDidMount() {
+    Axios.get(`/groups/${this.props.match.params.groupname}`);
+  }
+
+  componentDidUpdate(prevState, prevProps) {
+    if (this.props.location.pathname !== prevState.location.pathname) {
+      this.setState({ chatValue: "" });
+    }
+  }
+
   handleChange = e => {
     this.setState({ chatValue: e.target.value });
+  };
+  handleSubmit = () => {
+    const data = {
+      message: this.state.chatValue,
+      username: sessionStorage.getItem("username")
+    };
+    Axios.post(`/groups/${this.props.match.params.groupname}`, data);
   };
   render() {
     return (
@@ -56,10 +76,13 @@ export default class ChatBox extends Component {
               onChange={this.handleChange}
               placeholder="Send a message..."
             />
-            <button className="msgSubmitBtn">Submit</button>
+            <button onClick={this.handleSubmit} className="msgSubmitBtn">
+              Submit
+            </button>
           </div>
         </div>
       </div>
     );
   }
 }
+export default withRouter(ChatBox);

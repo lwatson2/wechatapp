@@ -12,9 +12,11 @@ import NavBar from "../navbar/NavBar";
 const classes = () => ({
   drawerPaper: {
     width: 240,
-    backgroundColor: "blue",
+    backgroundColor: "hsl(227, 42%, 51%)",
     zIndex: 1,
-    height: 100 + "vh"
+    height: 94 + "vh",
+    position: "absolute",
+    top: "50px"
   }
 });
 class Home extends Component {

@@ -46,7 +46,8 @@ router.post("/login", (req, res, next) => {
     if (user) {
       jwt.sign({ user }, "secretkey", { expiresIn: "1d" }, (err, token) => {
         res.json({
-          token
+          token,
+          username: user.username
         });
       });
     } else {
