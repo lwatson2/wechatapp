@@ -12,7 +12,7 @@ import NavBar from "../navbar/NavBar";
 const classes = () => ({
   drawerPaper: {
     width: 240,
-    backgroundColor: "hsl(227, 42%, 51%)",
+    backgroundColor: "hsl(234, 62%, 26%)",
     zIndex: 1,
     height: 94 + "vh",
     position: "absolute",

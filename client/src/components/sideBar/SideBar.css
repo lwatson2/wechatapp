@@ -1,6 +1,6 @@
 .groupListItem {
   padding: 10px;
-  color: hsl(210, 10%, 53%);
+  color: hsl(212, 16%, 67%);
   transition: all 0.5s ease-in;
   width: 80px;
 }
@@ -8,7 +8,7 @@
 }
 .groupListItem:hover {
   border-bottom: 1px solid hsl(210, 16%, 82%);
-  color: hsl(210, 16%, 82%);
+  color: hsl(210, 16%, 90%);
 }
 .groupListItem:hover::after {
   border: 0px;
@@ -17,5 +17,9 @@
 @media only screen and (max-width: 600px) {
   .groupNav {
     top: 0px;
+  }
+  .groupListItem {
+    border-bottom: 1px solid hsl(210, 16%, 82%);
+    color: hsl(210, 16%, 90%);
   }
 }

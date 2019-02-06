@@ -11,6 +11,7 @@
 .navList {
   display: flex;
   justify-content: space-around;
+  color: hsl(210, 20%, 94%);
 }
 .main-nav {
   flex: 1;
