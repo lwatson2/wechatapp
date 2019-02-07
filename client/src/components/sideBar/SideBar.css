@@ -8,6 +8,9 @@
   margin: 0 auto;
   width: 64%;
 }
+.logoutBtn {
+  border: none;
+}
 .groupListItem:hover {
   border-bottom: 1px solid hsl(210, 16%, 82%);
   color: hsl(210, 16%, 90%);
