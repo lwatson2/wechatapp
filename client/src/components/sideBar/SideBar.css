@@ -4,7 +4,9 @@
   transition: all 0.5s ease-in;
   width: 80px;
 }
-.groupNav {
+.logoutBtnContainer {
+  margin: 0 auto;
+  width: 64%;
 }
 .groupListItem:hover {
   border-bottom: 1px solid hsl(210, 16%, 82%);

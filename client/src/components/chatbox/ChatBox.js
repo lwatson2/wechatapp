@@ -2,21 +2,55 @@ import React, { Component } from "react";
 import "./ChatBox.css";
 import { withRouter } from "react-router";
 import Axios from "axios";
+import io from "socket.io-client";
+let socket = io.connect("http://localhost:5000");
 
 class ChatBox extends Component {
   state = {
     chatValue: "",
     username: "test",
-    message: "this is a test "
+    message: "this is a test ",
+    chatMessages: []
   };
 
   componentDidMount() {
-    Axios.get(`/groups/${this.props.match.params.groupname}`);
+    socket.emit("joinroom", {
+      room: this.props.match.params.groupname,
+      username: sessionStorage.getItem("username")
+    });
+    this.getChatHistory();
+    this.socketFunctions();
   }
-
+  getChatHistory = async () => {
+    const res = await Axios.get(`/groups/${this.props.match.params.groupname}`);
+    console.log(res.data.chatHistory);
+    let chatHistory = [];
+    let newStuff = res.data.chatHistory.map(item => {
+      let newObject = {
+        username: item.username,
+        message: item.message
+      };
+      chatHistory.push(newObject);
+      console.log(newObject);
+    });
+    this.setState({ chatMessages: chatHistory });
+  };
+  socketFunctions = () => {
+    socket.on("sendchat", data => {
+      console.log(data);
+      this.setState({
+        chatMessages: this.state.chatMessages.concat(data)
+      });
+    });
+  };
   componentDidUpdate(prevState, prevProps) {
     if (this.props.location.pathname !== prevState.location.pathname) {
       this.setState({ chatValue: "" });
+      socket.emit("joinroom", {
+        room: this.props.match.params.groupname,
+        username: sessionStorage.getItem("username")
+      });
+      this.getChatHistory();
     }
   }
 
@@ -29,43 +63,23 @@ class ChatBox extends Component {
       username: sessionStorage.getItem("username")
     };
     Axios.post(`/groups/${this.props.match.params.groupname}`, data);
+    socket.emit("sendchat", {
+      room: this.props.match.params.groupname,
+      message: this.state.chatValue,
+      username: sessionStorage.getItem("username")
+    });
+    this.setState({ chatValue: "" });
   };
   render() {
     return (
       <div className="chatWindow">
         <div className="messageWindow">
-          <div className="messageContainer">
-            <span className="userName">{this.state.username}</span>
-            <p className="message">{this.state.message}</p>
-          </div>
-          <div className="messageContainer">
-            <span className="userName">{this.state.username}</span>
-            <p className="message">{this.state.message}</p>
-          </div>
-          <div className="messageContainer">
-            <span className="userName">{this.state.username}</span>
-            <p className="message">{this.state.message}</p>
-          </div>
-          <div className="messageContainer">
-            <span className="userName">{this.state.username}</span>
-            <p className="message">{this.state.message}</p>
-          </div>
-          <div className="messageContainer">
-            <span className="userName">{this.state.username}</span>
-            <p className="message">{this.state.message}</p>
-          </div>
-          <div className="messageContainer">
-            <span className="userName">{this.state.username}</span>
-            <p className="message">{this.state.message}</p>
-          </div>
-          <div className="messageContainer">
-            <span className="userName">{this.state.username}</span>
-            <p className="message">{this.state.message}</p>
-          </div>
-          <div className="messageContainer">
-            <span className="userName">{this.state.username}</span>
-            <p className="message">{this.state.message}</p>
-          </div>
+          {this.state.chatMessages.map(({ username, message }) => (
+            <div className="messageContainer">
+              <span className="userName">{username}</span>
+              <p className="message">{message}</p>
+            </div>
+          ))}
         </div>
         <div className="putToBottom">
           <div className="chatInputContainer">
@@ -76,7 +90,11 @@ class ChatBox extends Component {
               onChange={this.handleChange}
               placeholder="Send a message..."
             />
-            <button onClick={this.handleSubmit} className="msgSubmitBtn">
+            <button
+              disabled={!this.state.chatValue}
+              onClick={this.handleSubmit}
+              className="msgSubmitBtn"
+            >
               Submit
             </button>
           </div>

@@ -4,7 +4,12 @@ const { ensureAuthenticated } = require("../config/auth");
 const Group = require("../models/Groups");
 
 router.get("/:groupname", (req, res) => {
-  console.log(req.params.groupname);
+  const { groupname } = req.params;
+  Group.findOne({ groupname }).then(group =>
+    res.json({
+      chatHistory: group.messages
+    })
+  );
 });
 
 /* router.post("/:groupname", async (req, res) => {
@@ -27,8 +32,6 @@ router.get("/:groupname", (req, res) => {
   });
 }); */
 router.post("/:groupname", async (req, res) => {
-  console.log(req.body);
-  console.log(req.params.groupname);
   const { username, message } = req.body;
   const { groupname } = req.params;
   const update = { $push: { messages: [{ username, message }] } };
