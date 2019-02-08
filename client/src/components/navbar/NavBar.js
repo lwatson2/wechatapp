@@ -27,7 +27,7 @@ class NavBar extends Component {
           </button>
           <div className="main-nav">
             <ul className="navList">
-              <li className="appName">WeChat</li>
+              <li className="appName">ReactChat</li>
               <li className="currentGroup">
                 Currently in {this.state.currentGroupName}
               </li>

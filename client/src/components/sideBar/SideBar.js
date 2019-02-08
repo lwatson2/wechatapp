@@ -18,13 +18,14 @@ class SideBar extends Component {
     Axios.get("/users/logout");
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("username");
+    this.props.history.push("/");
   };
   render() {
     const groups = ["general", "welcome", "movies", "games", "tv", "feedback"];
     const username = sessionStorage.getItem("username");
     return (
       <div>
-        <p>Currently logged in as {username}</p>
+        <p className="usernameP">Currently logged in as {username}</p>
         <div className="groupNav">
           <ul>
             {groups.map((group, key) => (

@@ -9,7 +9,30 @@
   width: 64%;
 }
 .logoutBtn {
+  background: transparent;
+  padding: 10px;
+  border-radius: 18px;
+  margin: auto 0;
+  position: relative;
+  top: 12px;
+  width: 98px;
   border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.5s ease-in-out;
+}
+.logoutBtn:hover {
+  background: hsl(210, 16%, 82%);
+
+  color: hsl(230, 49%, 34%);
+  /* left: 12px; */
+
+  border: none;
+}
+.usernameP {
+  padding-left: 10px;
+  max-width: 92%;
+  color: hsl(214, 15%, 91%);
 }
 .groupListItem:hover {
   border-bottom: 1px solid hsl(210, 16%, 82%);
@@ -26,5 +49,10 @@
   .groupListItem {
     border-bottom: 1px solid hsl(210, 16%, 82%);
     color: hsl(210, 16%, 90%);
+  }
+  .logoutBtn {
+    background: hsl(210, 16%, 82%);
+
+    color: hsl(230, 49%, 34%);
   }
 }
