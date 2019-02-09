@@ -28,7 +28,7 @@ class SideBar extends Component {
         <div className="usernameWrapper">
           <p className="usernameP">
             Currently logged in as
-            thisisareallylongusernamefornoapparentreasonotherthanfortesting
+            {username}
           </p>
         </div>
         <div className="groupNav">
