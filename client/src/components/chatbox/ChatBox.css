@@ -23,6 +23,7 @@
   flex-direction: column;
   padding-top: 12px;
   border-bottom: 1px solid hsl(209, 24%, 18%);
+  word-wrap: break-word;
 }
 .messageWindow {
   height: 86%;

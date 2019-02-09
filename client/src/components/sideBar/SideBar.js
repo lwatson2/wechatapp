@@ -25,7 +25,12 @@ class SideBar extends Component {
     const username = sessionStorage.getItem("username");
     return (
       <div>
-        <p className="usernameP">Currently logged in as {username}</p>
+        <div className="usernameWrapper">
+          <p className="usernameP">
+            Currently logged in as
+            thisisareallylongusernamefornoapparentreasonotherthanfortesting
+          </p>
+        </div>
         <div className="groupNav">
           <ul>
             {groups.map((group, key) => (

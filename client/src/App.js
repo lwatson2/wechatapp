@@ -6,6 +6,7 @@ import Home from "./components/home/Home";
 import Register from "./components/register/Register";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import ErrorPage from "./components/errorPage/ErrorPage";
 
 library.add(faBars);
 
@@ -48,6 +49,7 @@ class App extends Component {
             <ProtectedRoute exact path="/groups/:groupname" component={Home} />
 
             <Route exact path="/login" render={props => <Login {...props} />} />
+            <Route component={ErrorPage} />
           </Switch>
         </div>
       </BrowserRouter>

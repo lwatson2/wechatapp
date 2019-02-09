@@ -1,0 +1,23 @@
+.errorContainer {
+  position: relative;
+  top: 110px;
+  text-align: center;
+}
+.errorBtn {
+  background: transparent;
+  border: 2px solid;
+  padding: 16px;
+  border-radius: 11px;
+  width: 100px;
+  font-size: 19px;
+  color: hsla(210, 13%, 65%);
+  transition: all 0.5s;
+  cursor: pointer;
+}
+.errorTxt {
+  color: hsl(230, 49%, 58%);
+}
+
+.errorBtn:hover {
+  color: hsl(225, 57%, 67%);
+}

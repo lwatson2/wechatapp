@@ -20,14 +20,15 @@
   cursor: pointer;
   font-size: 16px;
   transition: all 0.5s ease-in-out;
+  color: hsl(210, 16%, 82%);
 }
 .logoutBtn:hover {
   background: hsl(210, 16%, 82%);
-
   color: hsl(230, 49%, 34%);
-  /* left: 12px; */
-
   border: none;
+}
+.usernameWrapper {
+  overflow-wrap: break-word;
 }
 .usernameP {
   padding-left: 10px;
