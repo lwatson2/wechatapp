@@ -43,7 +43,7 @@ app.use(express.static(__dirname + "/client/build"));
 
 //Socket setup
 const io = socket(server);
-io.set("origins", "https://floating-woodland-27702.herokuapp.com");
+
 let general = [],
   tv = [],
   feedback = [],
