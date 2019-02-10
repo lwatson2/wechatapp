@@ -9,7 +9,6 @@ const { verifyToken } = require("../config/jwt");
 const User = require("../models/User");
 
 router.post("/register", (req, res) => {
-  console.log(req.body);
   const { username, password } = req.body;
 
   User.findOne({ username: username }).then(user => {

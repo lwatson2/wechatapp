@@ -103,3 +103,19 @@ label {
   background: hsl(209, 18%, 26%);
   border-radius: 10px;
 }
+.loginMsgDiv {
+  position: relative;
+  bottom: 15px;
+  left: 76px;
+  width: 187px;
+  background: hsl(209, 18%, 26%);
+  border-radius: 10px;
+}
+.loginMsg {
+  margin: 0;
+  color: hsl(225, 57%, 67%);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 14px;
+  margin-right: 34px;
+}

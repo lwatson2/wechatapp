@@ -23,21 +23,18 @@ class ChatBox extends Component {
   }
   getChatHistory = async () => {
     const res = await Axios.get(`/groups/${this.props.match.params.groupname}`);
-    console.log(res.data.chatHistory);
     let chatHistory = [];
-    let newStuff = res.data.chatHistory.map(item => {
+    res.data.chatHistory.map(item => {
       let newObject = {
         username: item.username,
         message: item.message
       };
       chatHistory.push(newObject);
-      console.log(newObject);
     });
     this.setState({ chatMessages: chatHistory });
   };
   socketFunctions = () => {
     socket.on("sendchat", data => {
-      console.log(data);
       this.setState({
         chatMessages: this.state.chatMessages.concat(data)
       });
@@ -75,7 +72,7 @@ class ChatBox extends Component {
       <div className="chatWindow">
         <div className="messageWindow">
           {this.state.chatMessages.map(({ username, message }) => (
-            <div className="messageContainer">
+            <div className="messageContainer" key={message}>
               <span className="userName">{username}</span>
               <p className="message">{message}</p>
             </div>

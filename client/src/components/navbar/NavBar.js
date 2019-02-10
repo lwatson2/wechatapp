@@ -18,7 +18,6 @@ class NavBar extends Component {
   }
 
   render() {
-    const username = sessionStorage.getItem("username");
     return (
       <div>
         <div className="move">

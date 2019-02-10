@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./SideBar.css";
 import { withRouter } from "react-router";
 
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import io from "socket.io-client";
 import Axios from "axios";
 let socket = io.connect("http://localhost:5000");
@@ -33,10 +33,10 @@ class SideBar extends Component {
         </div>
         <div className="groupNav">
           <ul>
-            {groups.map((group, key) => (
-              <Link to={`/groups/${group}`}>
+            {groups.map((group, index) => (
+              <Link to={`/groups/${group}`} key={group}>
                 <li
-                  key={key}
+                  key={group}
                   className="groupListItem"
                   onClick={this.leaveRoom}
                 >

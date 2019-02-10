@@ -35,7 +35,6 @@ class App extends Component {
   };
 
   render() {
-    const isLoggedIn = sessionStorage.getItem("isLoggedIn");
     return (
       <BrowserRouter>
         <div>
@@ -48,7 +47,13 @@ class App extends Component {
             />
             <ProtectedRoute exact path="/groups/:groupname" component={Home} />
 
-            <Route exact path="/login" render={props => <Login {...props} />} />
+            <Route
+              exact
+              path="/login"
+              render={props => (
+                <Login {...props} isRegistered={this.state.isRegistered} />
+              )}
+            />
             <Route component={ErrorPage} />
           </Switch>
         </div>

@@ -12,6 +12,7 @@ class FloatingLabel extends Component {
     error: false,
     errorMsg: ""
   };
+
   activateField = value => {
     {
       value === "pass"
@@ -20,7 +21,6 @@ class FloatingLabel extends Component {
     }
   };
   disableFocus = e => {
-    console.log(e);
     if (e === "pass" && this.state.passValue === "") {
       this.setState({ passActive: false });
     }
@@ -30,6 +30,12 @@ class FloatingLabel extends Component {
     }
   };
   handleUserNameChange = e => {
+    if (this.state.userNameValue.length > 70) {
+      this.setState({
+        error: true,
+        errorMsg: "Username cannot be greater than 70 characters"
+      });
+    }
     this.setState({ userNameValue: e.target.value });
     e.preventDefault();
   };
@@ -43,7 +49,6 @@ class FloatingLabel extends Component {
       password: this.state.passValue
     };
     e.preventDefault();
-    console.log(this.props.type);
     if (this.state.passValue === "" || this.state.userNameValue === "") {
       this.setState({ error: true, errorMsg: "All fields are required." });
     } else if (this.state.passValue.length < 6) {
@@ -54,13 +59,13 @@ class FloatingLabel extends Component {
     } else if (this.props.type === "register") {
       try {
         const res = await axios.post("/users/register", data);
-        console.log(res.data);
         if (res.data.errors) {
           this.setState({
             error: true,
             errorMsg: res.data.msg
           });
         }
+        this.props.history.push("/login");
         this.props.handleRegister(res.isRegistered);
       } catch (error) {}
     } else {
@@ -90,6 +95,7 @@ class FloatingLabel extends Component {
       error,
       errorMsg
     } = this.state;
+    const { isRegistered } = this.props;
     return (
       <div>
         <form onSubmit={this.handleLogin}>
@@ -116,6 +122,13 @@ class FloatingLabel extends Component {
           {error ? (
             <div className="errorDiv">
               <p className="errorMsg">{errorMsg}</p>
+            </div>
+          ) : (
+            ""
+          )}
+          {isRegistered ? (
+            <div className="loginMsgDiv">
+              <p className="loginMsg">You may now login.</p>
             </div>
           ) : (
             ""

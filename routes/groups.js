@@ -39,7 +39,6 @@ router.post("/:groupname", async (req, res) => {
     if (err) {
       console.log(err);
     }
-    console.log(doc);
   });
 });
 module.exports = router;
