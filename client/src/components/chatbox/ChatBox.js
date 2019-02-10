@@ -3,7 +3,7 @@ import "./ChatBox.css";
 import { withRouter } from "react-router";
 import Axios from "axios";
 import io from "socket.io-client";
-let socket = io.connect("http://localhost:5000");
+let socket = io.connect(process.env.PORT || "http://localhost:5000");
 
 class ChatBox extends Component {
   state = {
