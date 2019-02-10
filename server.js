@@ -43,6 +43,7 @@ app.use(express.static(__dirname + "/client/build"));
 
 //Socket setup
 const io = socket(server);
+io.set("origins", "*:*");
 let general = [],
   tv = [],
   feedback = [],
