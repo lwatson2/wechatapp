@@ -42,7 +42,7 @@ app.use("/groups", require("./routes/groups"));
 app.use(express.static(__dirname + "/client/build"));
 
 //Socket setup
-const io = socket("https://floating-woodland-27702.herokuapp.com/");
+const io = socket(server);
 
 let general = [],
   tv = [],
