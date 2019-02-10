@@ -3,9 +3,8 @@ import "./ChatBox.css";
 import { withRouter } from "react-router";
 import Axios from "axios";
 import io from "socket.io-client";
-let socket = io.connect(
-  "https://floating-woodland-27702.herokuapp.com" || "http://localhost:5000"
-);
+let socket = io.connect("/");
+// || "http://localhost:5000"
 
 class ChatBox extends Component {
   state = {
