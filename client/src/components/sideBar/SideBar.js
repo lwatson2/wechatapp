@@ -5,7 +5,9 @@ import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 import io from "socket.io-client";
 import Axios from "axios";
-let socket = io.connect("http://localhost:5000");
+let socket = io.connect("https://floating-woodland-27702.herokuapp.com/", {
+  secure: true
+});
 
 class SideBar extends Component {
   leaveRoom = () => {
