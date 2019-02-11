@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
+const path = require("path");
 const bodyParser = require("body-parser");
 const socket = require("socket.io");
 
@@ -40,6 +41,9 @@ app.use(passport.session());
 app.use("/users", require("./routes/users"));
 app.use("/groups", require("./routes/groups"));
 app.use(express.static(__dirname + "/client/build"));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/build/index,.html"));
+});
 
 //Socket setup
 const io = socket(server);
