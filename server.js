@@ -42,7 +42,7 @@ app.use("/users", require("./routes/users"));
 app.use("/groups", require("./routes/groups"));
 app.use(express.static(__dirname + "/client/build"));
 app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/client/build/index,.html"));
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
 //Socket setup
