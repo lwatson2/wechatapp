@@ -57,7 +57,8 @@ class ChatBox extends Component {
   handleChange = e => {
     this.setState({ chatValue: e.target.value });
   };
-  handleSubmit = () => {
+  handleSubmit = e => {
+    e.preventDefault();
     const data = {
       message: this.state.chatValue,
       username: sessionStorage.getItem("username")
