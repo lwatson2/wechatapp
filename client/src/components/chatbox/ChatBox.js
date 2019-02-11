@@ -83,20 +83,18 @@ class ChatBox extends Component {
         </div>
         <div className="putToBottom">
           <div className="chatInputContainer">
-            <input
-              type="text"
-              className="chatInput"
-              value={this.state.chatValue}
-              onChange={this.handleChange}
-              placeholder="Send a message..."
-            />
-            <button
-              disabled={!this.state.chatValue}
-              onClick={this.handleSubmit}
-              className="msgSubmitBtn"
-            >
-              Submit
-            </button>
+            <form className="formWrapper" onSubmit={this.handleSubmit}>
+              <input
+                type="text"
+                className="chatInput"
+                value={this.state.chatValue}
+                onChange={this.handleChange}
+                placeholder="Send a message..."
+              />
+              <button disabled={!this.state.chatValue} className="msgSubmitBtn">
+                Submit
+              </button>
+            </form>
           </div>
         </div>
       </div>

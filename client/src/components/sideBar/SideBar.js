@@ -28,10 +28,7 @@ class SideBar extends Component {
     return (
       <div>
         <div className="usernameWrapper">
-          <p className="usernameP">
-            Currently logged in as
-            {username}
-          </p>
+          <p className="usernameP">Currently logged in as {username}</p>
         </div>
         <div className="groupNav">
           <ul>

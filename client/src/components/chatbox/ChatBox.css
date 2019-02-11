@@ -13,6 +13,10 @@
   top: 50px;
   left: 241px;
 }
+.formWrapper {
+  width: 100%;
+  display: inherit;
+}
 .messageContainer {
   display: -webkit-box;
   display: -ms-flexbox;
