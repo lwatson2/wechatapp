@@ -25,7 +25,7 @@ class ChatBox extends Component {
     this.socketFunctions();
   }
   getChatHistory = async () => {
-    const res = await Axios.get(`/groups/${this.props.match.params.groupname}`);
+    const res = await Axios.get(`/group/${this.props.match.params.groupname}`);
     /* let chatHistory = [];
     res.data.chatHistory.map(item => {
       let newObject = {
@@ -63,7 +63,7 @@ class ChatBox extends Component {
       message: this.state.chatValue,
       username: sessionStorage.getItem("username")
     };
-    Axios.post(`/groups/${this.props.match.params.groupname}`, data);
+    Axios.post(`/group/${this.props.match.params.groupname}`, data);
     socket.emit("sendchat", {
       room: this.props.match.params.groupname,
       message: this.state.chatValue,

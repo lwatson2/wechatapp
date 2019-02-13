@@ -39,7 +39,7 @@ app.use(passport.session());
 //Routes
 
 app.use("/users", require("./routes/users"));
-app.use("/groups", require("./routes/groups"));
+app.use("/group", require("./routes/groups"));
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(__dirname + "/client/build"));
   app.get("*", function(req, res) {
