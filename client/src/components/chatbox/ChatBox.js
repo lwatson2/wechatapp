@@ -9,20 +9,23 @@ let socket = io.connect("https://floating-woodland-27702.herokuapp.com/", {
 // || "http://localhost:5000"
 
 class ChatBox extends Component {
+  messagesEnd = React.createRef();
   state = {
     chatValue: "",
-    username: "test",
-    message: "this is a test ",
+    time: "",
     chatMessages: []
   };
-
   componentDidMount() {
     socket.emit("joinroom", {
       room: this.props.match.params.groupname,
       username: sessionStorage.getItem("username")
     });
+
     this.getChatHistory();
     this.socketFunctions();
+  }
+  scrollToBottom() {
+    this.messagesEnd.current.scrollIntoView({ behavior: "smooth" });
   }
   getChatHistory = async () => {
     const res = await Axios.get(`/group/${this.props.match.params.groupname}`);
@@ -34,13 +37,18 @@ class ChatBox extends Component {
       }; */
     /*  chatHistory.push(newObject);
     }); */
-    this.setState({ chatMessages: res.data.chatHistory });
+    this.setState({ chatMessages: res.data.chatHistory }, () =>
+      this.scrollToBottom()
+    );
   };
   socketFunctions = () => {
     socket.on("sendchat", data => {
-      this.setState({
-        chatMessages: this.state.chatMessages.concat(data)
-      });
+      this.setState(
+        {
+          chatMessages: this.state.chatMessages.concat(data)
+        },
+        () => this.scrollToBottom()
+      );
     });
   };
   componentDidUpdate(prevState, prevProps) {
@@ -59,9 +67,19 @@ class ChatBox extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
+    const time = Date.now();
+    const formattedTime = new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    }).format(time);
     const data = {
       message: this.state.chatValue,
-      username: sessionStorage.getItem("username")
+      username: sessionStorage.getItem("username"),
+      time: formattedTime
     };
     Axios.post(`/group/${this.props.match.params.groupname}`, data);
     socket.emit("sendchat", {
@@ -75,10 +93,12 @@ class ChatBox extends Component {
     return (
       <div className="chatWindow">
         <div className="messageWindow">
-          {this.state.chatMessages.map(({ username, message, _id }) => (
+          {this.state.chatMessages.map(({ username, message, time, _id }) => (
             <div className="messageContainer" key={_id}>
               <span className="userName">{username}</span>
               <p className="message">{message}</p>
+              <span className="timestamp">{time}</span>
+              <div ref={this.messagesEnd} />
             </div>
           ))}
         </div>

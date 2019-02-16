@@ -32,9 +32,10 @@ router.get("/:groupname", (req, res) => {
   });
 }); */
 router.post("/:groupname", async (req, res) => {
-  const { username, message } = req.body;
+  const { username, message, time } = req.body;
+  console.log(req.body);
   const { groupname } = req.params;
-  const update = { $push: { messages: [{ username, message }] } };
+  const update = { $push: { messages: [{ username, message, time }] } };
   Group.findOneAndUpdate({ groupname: groupname }, update, (err, doc) => {
     if (err) {
       console.log(err);

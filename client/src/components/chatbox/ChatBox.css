@@ -17,6 +17,13 @@
   width: 100%;
   display: inherit;
 }
+.timestamp {
+  font-size: 13px;
+  margin-left: 18px;
+  padding-bottom: 13px;
+  color: hsl(210, 16%, 82%);
+  opacity: 0.3;
+}
 .messageContainer {
   display: -webkit-box;
   display: -ms-flexbox;
