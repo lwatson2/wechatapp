@@ -8,7 +8,7 @@ export default class Register extends Component {
   render() {
     return (
       <div className="formDiv">
-        <p className="p-text">Please regitser so that you may login</p>
+        <p className="p-text">Please register so that you may login</p>
         <FloatingLabel
           isRegistered={this.props.handleRegister}
           type="register"

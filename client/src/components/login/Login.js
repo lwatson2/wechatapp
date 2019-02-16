@@ -8,7 +8,7 @@ export default class Login extends Component {
   render() {
     return (
       <div className="formDiv">
-        <p className="loginTxt">Please Login so you may view your messages</p>
+        <p className="loginTxt">Please login so you may view your messages</p>
         <FloatingLabel type="login" isRegistered={this.props.isRegistered} />
         <div className="linkWrapper">
           <p>Need to register?</p>
