@@ -19,7 +19,7 @@ require("./config/passport")(passport);
 const db = require("./keys").MongoURI;
 
 mongoose
-  .connect(db, { useNewUrlParser: true })
+  .connect(process.env.MONGODB_URI || db, { useNewUrlParser: true })
   .then(() => console.log("mongo db connected"))
   .catch(err => console.log(err));
 
