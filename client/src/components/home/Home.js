@@ -30,7 +30,7 @@ class Home extends Component {
     this.props.history.push("/");
   };
 
-  handleSideBar = props => {
+  handleSideBar = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
   render() {
@@ -49,7 +49,7 @@ class Home extends Component {
                 paper: classes.drawerPaper
               }}
             >
-              <SideBar />
+              <SideBar handleSideBar={this.handleSideBar} />
             </Drawer>
           </Hidden>
 

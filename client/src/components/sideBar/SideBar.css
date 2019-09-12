@@ -1,25 +1,54 @@
+.listItemContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
 .groupListItem {
   padding: 10px;
   color: hsl(212, 16%, 67%);
-  transition: all 0.5s ease-in;
-  width: 80px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  display: inline-block;
+}
+.groupListItem:hover {
+  color: hsl(210, 33%, 97%);
+}
+.groupListItem::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background: hsl(210, 33%, 97%);
+  -webkit-transition: width 0.3s;
+  transition: width 0.3s;
+  margin-top: 5px;
+}
+
+.groupListItem:hover::after {
+  width: 100%;
 }
 .logoutBtnContainer {
-  margin: 0 auto;
-  width: 64%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 .logoutBtn {
   background: transparent;
-  padding: 10px;
+  height: 40px;
   border-radius: 18px;
-  margin: auto 0;
-  position: relative;
-  top: 12px;
   width: 98px;
   border: none;
   cursor: pointer;
   font-size: 16px;
-  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
   color: hsl(210, 16%, 82%);
 }
 .logoutBtn:hover {
@@ -29,28 +58,24 @@
 }
 .usernameWrapper {
   overflow-wrap: break-word;
-}
-.usernameP {
-  padding-left: 10px;
-  max-width: 92%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   color: hsl(214, 15%, 91%);
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 30px;
 }
-.groupListItem:hover {
-  border-bottom: 1px solid hsl(210, 16%, 82%);
-  color: hsl(210, 16%, 90%);
-}
-.groupListItem:hover::after {
-  border: 0px;
-  color: hsl(210, 10%, 53%);
-}
+
 @media only screen and (max-width: 600px) {
   .groupNav {
     top: 0px;
   }
-  .groupListItem {
-    border-bottom: 1px solid hsl(210, 16%, 82%);
-    color: hsl(210, 16%, 90%);
-  }
+
   .logoutBtn {
     background: hsl(210, 16%, 82%);
 

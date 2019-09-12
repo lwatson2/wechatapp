@@ -6,9 +6,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: hsl(210, 24.4%, 16.1%);
+  background-color: hsl(210, 24%, 16%);
 }
-
+html,
+body {
+  height: 100%;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -18,4 +21,7 @@ a {
 }
 li {
   list-style-type: none;
+}
+#root {
+  height: 100%;
 }

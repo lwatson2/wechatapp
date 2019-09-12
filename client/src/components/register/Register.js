@@ -7,19 +7,21 @@ import "./Register.css";
 export default class Register extends Component {
   render() {
     return (
-      <div className="formDiv">
-        <p className="p-text">Please register so that you may login</p>
-        <FloatingLabel
-          isRegistered={this.props.handleRegister}
-          type="register"
-        />
-        <div className="linkWrapper">
-          <p>Already registered?</p>
-          <Link to="login">
-            <p className="linkP">Click here</p>
-          </Link>
+      <div className="registerContainer">
+        <div className="formDiv">
+          <p className="p-text">Please register so that you may login</p>
+          <FloatingLabel
+            isRegistered={this.props.handleRegister}
+            type="register"
+          />
+          <div className="linkWrapper">
+            <p>Already registered?</p>
+            <Link to="login">
+              <p className="linkP">Click here</p>
+            </Link>
+          </div>
+          <Route exact path="/login" component={Login} />
         </div>
-        <Route exact path="/login" component={Login} />
       </div>
     );
   }

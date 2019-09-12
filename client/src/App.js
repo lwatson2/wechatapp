@@ -37,26 +37,24 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div>
-          <Switch>
-            <Route
-              exact
-              path="/"
-              handleRegister={this.handleRegister}
-              component={Register}
-            />
-            <ProtectedRoute exact path="/groups/:groupname" component={Home} />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            handleRegister={this.handleRegister}
+            component={Register}
+          />
+          <ProtectedRoute exact path="/groups/:groupname" component={Home} />
 
-            <Route
-              exact
-              path="/login"
-              render={props => (
-                <Login {...props} isRegistered={this.state.isRegistered} />
-              )}
-            />
-            <Route component={ErrorPage} />
-          </Switch>
-        </div>
+          <Route
+            exact
+            path="/login"
+            render={props => (
+              <Login {...props} isRegistered={this.state.isRegistered} />
+            )}
+          />
+          <Route component={ErrorPage} />
+        </Switch>
       </BrowserRouter>
     );
   }

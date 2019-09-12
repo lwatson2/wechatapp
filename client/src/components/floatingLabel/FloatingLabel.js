@@ -107,11 +107,7 @@ class FloatingLabel extends Component {
               Username
             </label>
             <input
-              className={
-                this.state.userNameActive
-                  ? "floating-label-active"
-                  : "floating-label"
-              }
+              className="floating-label"
               type="text"
               value={userNameValue}
               onFocus={() => this.activateField("userName")}
@@ -141,11 +137,7 @@ class FloatingLabel extends Component {
               Password
             </label>
             <input
-              className={
-                this.state.passActive
-                  ? "floating-password-active"
-                  : "floating-password"
-              }
+              className="floating-password"
               type="password"
               value={passValue}
               onFocus={() => this.activateField("pass")}

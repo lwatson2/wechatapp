@@ -1,31 +1,20 @@
-.formDiv {
-  text-align: center;
-  position: relative;
-  top: 126px;
-  background: hsl(209, 14%, 37%);
-  width: 100px;
-  margin: 0 auto;
-  max-width: 100%;
-  height: auto;
-  border-radius: 6px;
-  color: hsl(209, 20%, 25%);
-  box-shadow: 0 2px 3px hsla(221, 68%, 93%, 0.1);
+.registerContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 100%;
 }
 .p-text {
   padding-top: 17px;
   padding-bottom: 12px;
 }
-.linkWrapper {
-  display: flex;
-  padding-left: 10px;
-}
-.linkP {
-  font-weight: 500;
-  font-size: 16px;
-  margin-left: 10px;
-  color: hsl(227, 42%, 51%);
-  transition: border-bottom 0.5s;
-}
+
 .linkP:hover {
   border-bottom: 1px solid;
 }
@@ -33,29 +22,5 @@
 @media only screen and (max-width: 370px) {
   .formDiv {
     width: 300px;
-  }
-  .linkWrapper {
-    padding-left: 45px;
-  }
-}
-@media only screen and (min-width: 371px) and (max-width: 489px) {
-  .linkWrapper {
-    padding-left: 85px;
-  }
-}
-@media only screen and (min-width: 480px) and (max-width: 767px) {
-  .linkWrapper {
-    padding-left: 95px;
-  }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-  .linkWrapper {
-    padding-left: 100px;
-  }
-}
-@media only screen and (min-width: 992px) {
-  .linkWrapper {
-    padding-left: 100px;
   }
 }

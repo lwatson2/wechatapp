@@ -5,20 +5,31 @@
   width: 100%;
   background: hsl(232, 51%, 36%);
 
+  display: -webkit-box;
+
+  display: -ms-flexbox;
+
   display: flex;
-  justify-content: space-around;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
 }
 .navList {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-around;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
   color: hsl(210, 20%, 94%);
 }
 .main-nav {
-  flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 .showNav {
   background: transparent;
   border: none;
+  color: hsl(210, 33%, 97%);
 }
 @media only screen and (min-width: 600px) {
   .showNav {
