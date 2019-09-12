@@ -16,10 +16,9 @@ const server = app.listen(PORT, console.log(`Server started on port ${PORT}`));
 require("./config/passport")(passport);
 
 //Mongo config
-const db = require("./keys").MongoURI;
 
 mongoose
-  .connect(process.env.MONGODB_URI || db, { useNewUrlParser: true })
+  .connect(process.env.MONGODB_URI, { useNewUrlParser: true })
   .then(() => console.log("mongo db connected"))
   .catch(err => console.log(err));
 
