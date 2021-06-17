@@ -1,11 +1,13 @@
+require("dotenv-safe/config");
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
 const path = require("path");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const socket = require("socket.io");
-
+const db = require("./keys").MONGODB_URI;
 //Server setup
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -17,17 +19,36 @@ require("./config/passport")(passport);
 
 //Mongo config
 
+console.log(`db`, db);
+
 mongoose
-  .connect(process.env.MONGODB_URI, { useNewUrlParser: true })
+  .connect(process.env.MONGODB_URI || db, { useNewUrlParser: true })
   .then(() => console.log("mongo db connected"))
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
 
 //Express session middleware
+
+app.set("trust proxy", 1);
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+  })
+);
+
 app.use(
   session({
-    secret: "this is my secret",
+    name: process.env.COOKIE_NAME,
+    secret: process.env.SESSION_SECRET,
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
+      httpOnly: true,
+      sameSite: "lax", // csrf
+      // secure: __prod__, // cookie only works in https
+      // domain: __prod__ ? ".codeponder.com" : undefined,
+    },
   })
 );
 
@@ -38,10 +59,10 @@ app.use(passport.session());
 //Routes
 
 app.use("/users", require("./routes/users"));
-app.use("/group", require("./routes/groups"));
+app.use("/message", require("./routes/messages"));
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(__dirname + "/client/build"));
-  app.get("*", function(req, res) {
+  app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname + "/client/build/index.html"));
   });
 }
@@ -49,68 +70,31 @@ if (process.env.NODE_ENV === "production") {
 //Socket setup
 const io = socket(server);
 
-let general = [],
-  tv = [],
-  feedback = [],
-  welcome = [],
-  movies = [],
-  games = [];
+let rooms = {
+  general: [],
+  tv: [],
+  feedback: [],
+  welcome: [],
+  movies: [],
+  games: [],
+};
 
-io.on("connection", socket => {
-  socket.on("joinroom", data => {
-    if (data.room === "general") {
-      general.push(data.username);
-    } else if (data.room === "welcome") {
-      welcome.push(data.username);
-    } else if (data.room === "tv") {
-      tv.push(data.username);
-    } else if (data.room === "movies") {
-      movies.push(data.username);
-    } else if (data.room === "games") {
-      games.push(data.username);
-    } else if (data.room === "feedback") {
-      feedback.push(data.username);
-    }
+io.on("connection", (socket) => {
+  socket.on("joinroom", ({ room }) => {
+    console.log(`rooms[room]`, rooms[room]);
+    rooms[room].push(data.username);
     socket.join(data.room);
   });
-  socket.on("test", data => {
+  socket.on("test", (data) => {
     io.sockets.in(data.room).emit("test", "this is a test");
   });
-  socket.on("leaveroom", data => {
-    if (data.currentroom === "general") {
-      const newRoom = general.filter(username => {
-        return username != data.username;
-      });
-      general = newRoom;
-    } else if (data.currentroom === "welcome") {
-      const newRoom = welcome.filter(username => {
-        return username != data.username;
-      });
-      welcome = newRoom;
-    } else if (data.currentroom === "tv") {
-      const newRoom = tv.filter(username => {
-        return username != data.username;
-      });
-      tv = newRoom;
-    } else if (data.currentroom === "movies") {
-      const newRoom = movies.filter(username => {
-        return username != data.username;
-      });
-      movies = newRoom;
-    } else if (data.currentroom === "games") {
-      const newRoom = games.filter(username => {
-        return username != data.username;
-      });
-      games = newRoom;
-    } else if (data.currentroom === "feedback") {
-      const newRoom = feedback.filter(username => {
-        return username != data.username;
-      });
-      feedback = newRoom;
-    }
+  socket.on("leaveroom", ({ currentroom }) => {
+    rooms[currentroom] = rooms[currentroom].filter((username) => {
+      return username != data.username;
+    });
     socket.leave(data.currentroom);
   });
-  socket.on("sendchat", data => {
+  socket.on("sendchat", (data) => {
     io.sockets.in(data.room).emit("sendchat", data);
   });
 });
