@@ -2,28 +2,29 @@ const express = require("express");
 const router = express.Router();
 const { ensureAuthenticated } = require("../config/auth");
 const Messages = require("../models/Message");
+const User = require("../models/User");
 
-router.get("/getMessages", (req, res) => {
+router.get("/getMessages/:groupname", (req, res) => {
   const { groupname } = req.params;
-  Messages.find({ groupname });
-  Messages.findOne({ groupname }).then((group) =>
-    res.json({
-      chatHistory: group.messages,
-    })
+
+  Messages.find({ groupname }).then((messagesData) =>
+    res.json({ messagesData })
   );
 });
 
 router.post("/postMessage", async (req, res) => {
-  const { username, message, groupname } = req.body;
+  const { message, groupname } = req.body;
+  const user = await User.findById(req.session.userId);
 
-  const newMessage = new Messages({
-    groupname,
-    username,
-    message,
-    time: new Date(),
-    userId: req.session.userId,
-  });
-  await newMessage.save();
+  // const newMessage = new Messages({
+  //   groupname,
+  //   username,
+  //   message,
+  //   time: new Date(),
+  //   userId: req.session.userId,
+  // });
+  // const myMessage = await newMessage.save();
+  //
   // res.json({
   //   msg: "successful",
   // });

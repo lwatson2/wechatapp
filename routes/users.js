@@ -37,7 +37,10 @@ router.post("/register", (req, res) => {
         const savedUser = await newUser.save();
         req.session.userId = savedUser._id;
         res.json({
-          savedUser,
+          user: {
+            userId: user._id,
+            username: user.username,
+          },
         });
       })
     );
@@ -71,7 +74,12 @@ router.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (user) {
       req.session.userId = user._id;
-      res.json({ user });
+      res.json({
+        user: {
+          userId: user._id,
+          username: user.username,
+        },
+      });
       // jwt.sign(
       //   { user },
       //   process,
@@ -90,14 +98,16 @@ router.post("/login", (req, res, next) => {
   })(req, res);
 });
 router.get("/me", async (req, res) => {
-  console.log(`req.session.userId`, req.session.userId);
   if (!req.session.userId) {
-    return res.json({ id: null });
+    return res.json({ user: null });
   }
   try {
     const user = await User.findById(req.session.userId);
     res.json({
-      id: user._id,
+      user: {
+        userId: user._id,
+        username: user.username,
+      },
     });
   } catch (error) {
     console.log(`error`, error);

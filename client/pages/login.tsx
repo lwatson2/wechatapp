@@ -12,14 +12,13 @@ import { UserContext } from "../utils/userContext";
 interface loginProps {}
 
 const Login: React.FC = ({}) => {
-  const { updateUserId } = useContext(UserContext);
+  const { updateUser } = useContext(UserContext);
   const router = useRouter();
   return (
     <Wrapper mx="auto" variant="small">
       <Formik
         initialValues={{ username: "", password: "" }}
         onSubmit={async (values, { setErrors }) => {
-          console.log(process.env.NEXT_PUBLIC_API_URL);
           const { data } = await axios.post(
             `${process.env.NEXT_PUBLIC_API_URL}/users/login`,
             values,
@@ -28,7 +27,7 @@ const Login: React.FC = ({}) => {
           if (data.errors) {
             setErrors(toErrorMap(data.errors));
           } else {
-            updateUserId(data.user._id);
+            updateUser(data.user);
             router.push("/");
           }
         }}

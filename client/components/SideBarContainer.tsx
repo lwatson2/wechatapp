@@ -23,7 +23,7 @@ import { SideBar } from "./SideBar";
 export const SideBarContainer: React.FC = ({}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
-  const { userId } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   if (isLargerThan768) {
     return (
@@ -33,7 +33,7 @@ export const SideBarContainer: React.FC = ({}) => {
         </Heading>
         <Divider mx="auto" width="85%" />
         <SideBar />
-        <LoginLogoutBtns userId={userId} />
+        <LoginLogoutBtns userId={user?.userId} />
       </Flex>
     );
   }
@@ -58,7 +58,7 @@ export const SideBarContainer: React.FC = ({}) => {
           </DrawerBody>
 
           <DrawerFooter>
-            <LoginLogoutBtns userId={userId} />
+            <LoginLogoutBtns userId={user?.userId} />
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

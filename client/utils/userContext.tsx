@@ -1,20 +1,25 @@
 import axios from "axios";
 import { createContext, useState, useEffect } from "react";
 
+export interface userType {
+  userId?: string;
+  username?: string;
+}
+
 type userContextType = {
-  userId: string | null;
-  updateUserId: (newUserId: string) => void;
-  clearUserId: () => void;
+  user: userType;
+  updateUser: (user: userType) => void;
+  clearUser: () => void;
 };
 
 export const UserContext = createContext<userContextType>({
-  userId: null,
-  updateUserId: () => {},
-  clearUserId: () => {},
+  user: {} as userType,
+  updateUser: () => {},
+  clearUser: () => {},
 });
 
 export const UserProvider: React.FC = ({ children }) => {
-  const [userId, setUserId] = useState<string | null>(null);
+  const [user, setUser] = useState<userType | {}>({});
 
   useEffect(() => {
     fetchMe();
@@ -25,19 +30,20 @@ export const UserProvider: React.FC = ({ children }) => {
       `${process.env.NEXT_PUBLIC_API_URL}/users/me`,
       { withCredentials: true }
     );
-    setUserId(data.id);
+
+    setUser(data.user);
   };
 
-  const updateUserId = (id: string) => {
-    setUserId(id);
+  const updateUser = (userData: userType) => {
+    setUser(userData);
   };
 
-  const clearUserId = () => {
-    setUserId(null);
+  const clearUser = () => {
+    setUser({});
   };
 
   return (
-    <UserContext.Provider value={{ userId, updateUserId, clearUserId }}>
+    <UserContext.Provider value={{ user, updateUser, clearUser }}>
       {children}
     </UserContext.Provider>
   );

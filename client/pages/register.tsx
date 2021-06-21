@@ -15,7 +15,6 @@ const Register: React.FC = ({}) => {
       <Formik
         initialValues={{ username: "", password: "" }}
         onSubmit={async (values, { setErrors }) => {
-          console.log(process.env.NEXT_PUBLIC_API_URL);
           const { data } = await axios.post(
             `${process.env.NEXT_PUBLIC_API_URL}/users/register`,
             values,

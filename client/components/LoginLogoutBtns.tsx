@@ -1,9 +1,10 @@
 import { Box, Button, Link } from "@chakra-ui/react";
 import React from "react";
 import NextLink from "next/link";
+import { userType } from "../utils/userContext";
 
 interface userIdType {
-  userId: string | null;
+  userId?: string;
 }
 
 export const LoginLogoutBtns: React.FC<userIdType> = ({ userId }) => {
