@@ -22,12 +22,20 @@ import dayjs from "dayjs";
 import { Formik, Form, FormikProps, Field, FormikValues } from "formik";
 import { UserContext } from "../utils/userContext";
 import axios from "axios";
+import { io, Socket } from "socket.io-client";
+import { useRef } from "react";
+import { DefaultEventsMap } from "socket.io-client/build/typed-events";
+
+// || "http://localhost:5000"
 
 interface groupProps {
   defaultGroup: string;
 }
 
 const Group: React.FC<groupProps> = ({ defaultGroup }) => {
+  // const socketRef = useRef<SocketIOClient.Socket>(null);
+  const socketRef = useRef<Socket | null>();
+  // let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -35,10 +43,22 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
   const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
   const router = useRouter();
   const { group } = router.query;
+  const currentRoom = group || "general";
 
   const gridProps = isLargerThan768
     ? { templateColumns: "200px auto" }
     : { templateRows: "auto 1fr" };
+
+  useEffect(() => {
+    socketRef.current = io("http://localhost:5000", {
+      withCredentials: true,
+    });
+
+    socketRef.current.on("sendchat", (data) => {});
+    return () => {
+      socketRef.current?.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,6 +79,10 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
       setMessages(data.messagesData);
       setLoading(false);
     };
+    socketRef.current?.emit("join", {
+      room: currentRoom,
+      username: "bob",
+    });
     fetchData();
   }, [group]);
 
@@ -104,10 +128,10 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
                   <Box
                     maxW={"600px"}
                     wordBreak="break-word"
-                    p={4}
+                    p={2}
                     borderRadius={8}
                     shadow="md"
-                    borderWidth="1px"
+                    bgGradient="linear(to-l, #647DEE , #7F53AC)"
                   >
                     {message.message}
                   </Box>
@@ -134,11 +158,15 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
                         groupname: group || "general",
                         username: user.username,
                       };
-                      const { data } = await axios.post(
-                        `${process.env.NEXT_PUBLIC_API_URL}/message/postMessage`,
-                        messageValues,
-                        { withCredentials: true }
-                      );
+                      // const { data } = await axios.post(
+                      //   `${process.env.NEXT_PUBLIC_API_URL}/message/postMessage`,
+                      //   messageValues,
+                      //   { withCredentials: true }
+                      // );
+                      socketRef.current?.emit("sendchat", {
+                        room: currentRoom,
+                        message: messageValues,
+                      });
                     }}
                   >
                     {({ isSubmitting }: FormikProps<any>) => (

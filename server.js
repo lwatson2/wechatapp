@@ -6,14 +6,20 @@ const passport = require("passport");
 const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const socket = require("socket.io");
+
 const db = require("./keys").MONGODB_URI;
 //Server setup
 const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(bodyParser.json());
 const server = app.listen(PORT, console.log(`Server started on port ${PORT}`));
-
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
 //Passport config
 require("./config/passport")(passport);
 
@@ -67,8 +73,8 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-//Socket setup
-const io = socket(server);
+// //Socket setup
+// const io = socket(server);
 
 let rooms = {
   general: [],
@@ -80,10 +86,10 @@ let rooms = {
 };
 
 io.on("connection", (socket) => {
-  socket.on("joinroom", ({ room }) => {
-    console.log(`rooms[room]`, rooms[room]);
-    rooms[room].push(data.username);
-    socket.join(data.room);
+  socket.on("join", ({ room, username }) => {
+    console.log(`rooms[room]`, username);
+    // rooms[room].push(username);
+    socket.join(room);
   });
   socket.on("test", (data) => {
     io.sockets.in(data.room).emit("test", "this is a test");
@@ -94,7 +100,8 @@ io.on("connection", (socket) => {
     });
     socket.leave(data.currentroom);
   });
-  socket.on("sendchat", (data) => {
-    io.sockets.in(data.room).emit("sendchat", data);
+  socket.on("sendchat", ({ room, message }) => {
+    io.to(room).emit("sendchat", message);
+    // io.sockets.in(data.room).emit("sendchat", data);
   });
 });
