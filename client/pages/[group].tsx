@@ -18,7 +18,7 @@ import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import { Layout } from "../components/Layout";
 import { SideBarContainer } from "../components/SideBarContainer";
-
+import dayjs from "dayjs";
 import { Formik, Form, FormikProps, Field, FormikValues } from "formik";
 import { UserContext } from "../utils/userContext";
 import axios from "axios";
@@ -37,14 +37,17 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
   const { group } = router.query;
 
   const gridProps = isLargerThan768
-    ? { templateColumns: "150px auto" }
+    ? { templateColumns: "200px auto" }
     : { templateRows: "auto 1fr" };
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
+
       const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/message/getMessages/general`,
+        `${process.env.NEXT_PUBLIC_API_URL}/message/getMessages/${
+          group || "general"
+        }`,
         {
           withCredentials: true,
           // params: {
@@ -57,7 +60,7 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [group]);
 
   function validateMessage(values: FormikValues) {
     let error;
@@ -95,7 +98,7 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
                   }
                   direction="column"
                 >
-                  <Text mb={2} color="gray.400">
+                  <Text mb={2} color="gray.400" fontSize="sm">
                     {message.username}
                   </Text>
                   <Box
@@ -108,6 +111,9 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
                   >
                     {message.message}
                   </Box>
+                  <Text color="gray.600" fontSize="xs">
+                    {dayjs(message.time).format("hh:mmA, MMM DD")}
+                  </Text>
                 </Flex>
               ))}
             </Stack>
@@ -125,7 +131,7 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
                     onSubmit={async (values, { setErrors }) => {
                       const messageValues = {
                         message: values.messageText,
-                        groupname: "general",
+                        groupname: group || "general",
                         username: user.username,
                       };
                       const { data } = await axios.post(

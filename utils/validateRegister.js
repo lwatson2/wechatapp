@@ -7,6 +7,14 @@ module.exports.validateRegister = (username, password) => {
       },
     ];
   }
+  if (username.length >= 50) {
+    return [
+      {
+        field: "username",
+        message: "length must be less than 50",
+      },
+    ];
+  }
 
   if (username.includes("@")) {
     return [

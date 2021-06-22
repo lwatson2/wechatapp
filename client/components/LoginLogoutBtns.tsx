@@ -22,11 +22,18 @@ export const LoginLogoutBtns: React.FC<userIdType> = ({ userId }) => {
           Logout
         </Button>
       ) : (
-        <NextLink href="/login">
-          <Button as={Link} colorScheme="teal">
-            Login
-          </Button>
-        </NextLink>
+        <Box>
+          <NextLink href="/login">
+            <Button mr={4} as={Link} colorScheme="teal">
+              Login
+            </Button>
+          </NextLink>
+          <NextLink href="/register">
+            <Button as={Link} colorScheme="teal">
+              Register
+            </Button>
+          </NextLink>
+        </Box>
       )}
     </Box>
   );

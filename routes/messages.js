@@ -16,7 +16,6 @@ router.post("/postMessage", async (req, res) => {
   const { message, groupname, username } = req.body;
   // const user = await User.findById(req.session.userId);
 
-  console.log(`username`, username);
   const newMessage = new Messages({
     groupname,
     username,
