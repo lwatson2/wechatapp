@@ -13,21 +13,22 @@ router.get("/getMessages/:groupname", (req, res) => {
 });
 
 router.post("/postMessage", async (req, res) => {
-  const { message, groupname } = req.body;
-  const user = await User.findById(req.session.userId);
+  const { message, groupname, username } = req.body;
+  // const user = await User.findById(req.session.userId);
 
-  // const newMessage = new Messages({
-  //   groupname,
-  //   username,
-  //   message,
-  //   time: new Date(),
-  //   userId: req.session.userId,
-  // });
-  // const myMessage = await newMessage.save();
-  //
-  // res.json({
-  //   msg: "successful",
-  // });
+  console.log(`username`, username);
+  const newMessage = new Messages({
+    groupname,
+    username,
+    message,
+    time: new Date(),
+    userId: req.session.userId,
+  });
+  const myMessage = await newMessage.save();
+
+  res.json({
+    msg: "successful",
+  });
 });
 // router.post("/:groupname", async (req, res) => {
 //   const { username, message, time } = req.body;

@@ -95,9 +95,9 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
                   }
                   direction="column"
                 >
-                  {/* <Text mb={2} color="gray.400">
-                      {creator.username}
-                    </Text> */}
+                  <Text mb={2} color="gray.400">
+                    {message.username}
+                  </Text>
                   <Box
                     maxW={"600px"}
                     wordBreak="break-word"
@@ -126,6 +126,7 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
                       const messageValues = {
                         message: values.messageText,
                         groupname: "general",
+                        username: user.username,
                       };
                       const { data } = await axios.post(
                         `${process.env.NEXT_PUBLIC_API_URL}/message/postMessage`,
