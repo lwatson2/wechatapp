@@ -26,7 +26,7 @@ router.post("/postMessage", async (req, res) => {
   const myMessage = await newMessage.save();
 
   res.json({
-    msg: "successful",
+    message: myMessage,
   });
 });
 // router.post("/:groupname", async (req, res) => {

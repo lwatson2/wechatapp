@@ -87,7 +87,6 @@ let rooms = {
 
 io.on("connection", (socket) => {
   socket.on("join", ({ room, username }) => {
-    console.log(`rooms[room]`, username);
     // rooms[room].push(username);
     socket.join(room);
   });
@@ -100,8 +99,8 @@ io.on("connection", (socket) => {
     });
     socket.leave(data.currentroom);
   });
-  socket.on("sendchat", ({ room, message }) => {
-    io.to(room).emit("sendchat", message);
+  socket.on("sendchat", ({ message }) => {
+    io.to(message.groupname).emit("sendchat", message);
     // io.sockets.in(data.room).emit("sendchat", data);
   });
 });

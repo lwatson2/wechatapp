@@ -32,12 +32,19 @@ interface groupProps {
   defaultGroup: string;
 }
 
+type Message = {
+  username: string;
+  message: string;
+  groupname: string;
+  time: string;
+};
+
 const Group: React.FC<groupProps> = ({ defaultGroup }) => {
-  // const socketRef = useRef<SocketIOClient.Socket>(null);
   const socketRef = useRef<Socket | null>();
-  // let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
-  const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [messages, setMessages] = useState<Message[] | []>([]);
+  const messagesRef = useRef(messages);
+  const [loading, setLoading] = useState(true);
 
   const { user } = useContext(UserContext);
   const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
@@ -54,11 +61,29 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
       withCredentials: true,
     });
 
-    socketRef.current.on("sendchat", (data) => {});
+    socketRef.current.on("sendchat", (data: any) => {
+      const currentMessages = [...messagesRef.current, data] as Message[];
+      // currentMessages.push(data);
+
+      //
+      setMessages(currentMessages);
+    });
     return () => {
       socketRef.current?.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    messagesRef.current = messages;
+  });
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,9 +95,6 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
         }`,
         {
           withCredentials: true,
-          // params: {
-          //   groupname: "general",
-          // },
         }
       );
 
@@ -138,6 +160,7 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
                   <Text color="gray.600" fontSize="xs">
                     {dayjs(message.time).format("hh:mmA, MMM DD")}
                   </Text>
+                  <div ref={messagesEndRef} />
                 </Flex>
               ))}
             </Stack>
@@ -158,14 +181,14 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
                         groupname: group || "general",
                         username: user.username,
                       };
-                      // const { data } = await axios.post(
-                      //   `${process.env.NEXT_PUBLIC_API_URL}/message/postMessage`,
-                      //   messageValues,
-                      //   { withCredentials: true }
-                      // );
+                      const { data } = await axios.post(
+                        `${process.env.NEXT_PUBLIC_API_URL}/message/postMessage`,
+                        messageValues,
+                        { withCredentials: true }
+                      );
+
                       socketRef.current?.emit("sendchat", {
-                        room: currentRoom,
-                        message: messageValues,
+                        message: data.message,
                       });
                     }}
                   >
