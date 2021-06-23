@@ -98,8 +98,8 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
         }
       );
 
-      setMessages(data.messagesData);
       setLoading(false);
+      setMessages(data.messagesData);
     };
     socketRef.current?.emit("join", {
       room: currentRoom,
@@ -175,7 +175,7 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
                 >
                   <Formik
                     initialValues={{ messageText: "" }}
-                    onSubmit={async (values, { setErrors }) => {
+                    onSubmit={async (values, { setErrors, resetForm }) => {
                       const messageValues = {
                         message: values.messageText,
                         groupname: group || "general",
@@ -190,6 +190,7 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
                       socketRef.current?.emit("sendchat", {
                         message: data.message,
                       });
+                      resetForm();
                     }}
                   >
                     {({ isSubmitting }: FormikProps<any>) => (
