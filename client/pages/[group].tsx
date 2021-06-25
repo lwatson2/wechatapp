@@ -81,7 +81,6 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
     // tell backend to add socket to room everytime group changes
     socketRef.current?.emit("join", {
       room: currentRoom,
-      username: user.username,
     });
   }, [group]);
 

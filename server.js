@@ -86,7 +86,7 @@ let rooms = {
 };
 
 io.on("connection", (socket) => {
-  socket.on("join", ({ room, username }) => {
+  socket.on("join", ({ room }) => {
     // rooms[room].push(username);
     socket.join(room);
   });
