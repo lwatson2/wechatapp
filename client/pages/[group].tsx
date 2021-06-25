@@ -20,18 +20,19 @@ export type Message = {
   time: string;
 };
 
-const Group: React.FC<groupProps> = () => {
-  const socketRef = useRef<Socket | null>();
-
+const Group: React.FC<groupProps> = ({ defaultGroup }) => {
   const [messages, setMessages] = useState<Message[] | []>([]);
-  const messagesRef = useRef(messages);
   const [loading, setLoading] = useState(true);
+
+  const socketRef = useRef<Socket | null>();
+  const messagesRef = useRef(messages);
 
   const { user } = useContext(UserContext);
   const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
-  const router = useRouter();
-  const { group } = router.query;
-  const currentRoom = (group as string) || "general";
+  const { query } = useRouter();
+
+  const { group } = query;
+  const currentRoom = (group as string) || defaultGroup;
 
   const gridProps = isLargerThan768
     ? { templateColumns: "200px auto" }
@@ -54,8 +55,9 @@ const Group: React.FC<groupProps> = () => {
   }, []);
 
   useEffect(() => {
+    // have to set messagesRef to messages because of socket
     messagesRef.current = messages;
-  });
+  }, [messages]);
 
   useEffect(() => {
     const fetchData = async () => {
