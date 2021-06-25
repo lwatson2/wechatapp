@@ -1,47 +1,28 @@
-import { SpinnerIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  Input,
-  InputGroup,
-  InputRightAddon,
-  Stack,
-  Text,
-  useMediaQuery,
-  Spinner,
-  FormControl,
-  FormErrorMessage,
-} from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
-import { Layout } from "../components/Layout";
-import { SideBarContainer } from "../components/SideBarContainer";
-import dayjs from "dayjs";
-import { Formik, Form, FormikProps, Field, FormikValues } from "formik";
-import { UserContext } from "../utils/userContext";
+import { Flex, Grid, Spinner, useMediaQuery } from "@chakra-ui/react";
 import axios from "axios";
+import { useRouter } from "next/router";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
-import { useRef } from "react";
-import { DefaultEventsMap } from "socket.io-client/build/typed-events";
-
-// || "http://localhost:5000"
+import { Layout } from "../components/Layout";
+import { MessageInputContainer } from "../components/MessageInputContainer";
+import { MessagesContainer } from "../components/MessagesContainer";
+import { SideBarContainer } from "../components/SideBarContainer";
+import { UserContext } from "../utils/userContext";
 
 interface groupProps {
   defaultGroup: string;
 }
 
-type Message = {
+export type Message = {
   username: string;
   message: string;
   groupname: string;
   time: string;
 };
 
-const Group: React.FC<groupProps> = ({ defaultGroup }) => {
+const Group: React.FC<groupProps> = () => {
   const socketRef = useRef<Socket | null>();
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+
   const [messages, setMessages] = useState<Message[] | []>([]);
   const messagesRef = useRef(messages);
   const [loading, setLoading] = useState(true);
@@ -50,25 +31,24 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
   const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
   const router = useRouter();
   const { group } = router.query;
-  const currentRoom = group || "general";
+  const currentRoom = (group as string) || "general";
 
   const gridProps = isLargerThan768
     ? { templateColumns: "200px auto" }
     : { templateRows: "auto 1fr" };
 
   useEffect(() => {
+    //set socket ref to be used through renders
     socketRef.current = io("http://localhost:5000", {
       withCredentials: true,
     });
 
     socketRef.current.on("sendchat", (data: any) => {
       const currentMessages = [...messagesRef.current, data] as Message[];
-      // currentMessages.push(data);
-
-      //
       setMessages(currentMessages);
     });
     return () => {
+      // disconnect socket when component unmounts
       socketRef.current?.disconnect();
     };
   }, []);
@@ -77,22 +57,12 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
     messagesRef.current = messages;
   });
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
 
       const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/message/getMessages/${
-          group || "general"
-        }`,
+        `${process.env.NEXT_PUBLIC_API_URL}/message/getMessages/${currentRoom}`,
         {
           withCredentials: true,
         }
@@ -101,21 +71,23 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
       setLoading(false);
       setMessages(data.messagesData);
     };
-    socketRef.current?.emit("join", {
-      room: currentRoom,
-      username: "bob",
-    });
+
     fetchData();
   }, [group]);
 
-  function validateMessage(values: FormikValues) {
-    let error;
-    if (!values) {
-      error = "Message is required";
-    }
+  useEffect(() => {
+    // tell backend to add socket to room everytime group changes
+    socketRef.current?.emit("join", {
+      room: currentRoom,
+      username: user.username,
+    });
+  }, [group]);
 
-    return error;
-  }
+  const sendMessage = (message: Message) => {
+    socketRef.current?.emit("sendchat", {
+      message,
+    });
+  };
 
   return (
     <Layout mx="">
@@ -127,109 +99,12 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
           </Flex>
         ) : (
           <Flex mt={8} height="calc(100vh - 32px)" direction="column">
-            <Stack
-              // borderBottom="1px solid #A0AEC0"
-              pb={4}
-              flex="1"
-              overflowY="scroll"
-              // marginBottom={8}
-              spacing={8}
-            >
-              {messages.map((message: any) => (
-                <Flex
-                  key={message._id}
-                  p={"0 1rem"}
-                  align={
-                    user?.userId === message.userId ? "flex-end" : "flex-start"
-                  }
-                  direction="column"
-                >
-                  <Text mb={2} color="gray.400" fontSize="sm">
-                    {message.username}
-                  </Text>
-                  <Box
-                    maxW={"600px"}
-                    wordBreak="break-word"
-                    p={2}
-                    borderRadius={8}
-                    shadow="md"
-                    bgGradient="linear(to-l, #647DEE , #7F53AC)"
-                  >
-                    {message.message}
-                  </Box>
-                  <Text color="gray.600" fontSize="xs">
-                    {dayjs(message.time).format("hh:mmA, MMM DD")}
-                  </Text>
-                  <div ref={messagesEndRef} />
-                </Flex>
-              ))}
-            </Stack>
-            {user?.userId ? (
-              <Flex height="100px" align="center">
-                <Grid
-                  templateColumns="1fr auto"
-                  width="100%"
-                  gap={4}
-                  ml={4}
-                  mr={4}
-                >
-                  <Formik
-                    initialValues={{ messageText: "" }}
-                    onSubmit={async (values, { setErrors, resetForm }) => {
-                      const messageValues = {
-                        message: values.messageText,
-                        groupname: group || "general",
-                        username: user.username,
-                      };
-                      const { data } = await axios.post(
-                        `${process.env.NEXT_PUBLIC_API_URL}/message/postMessage`,
-                        messageValues,
-                        { withCredentials: true }
-                      );
-
-                      socketRef.current?.emit("sendchat", {
-                        message: data.message,
-                      });
-                      resetForm();
-                    }}
-                  >
-                    {({ isSubmitting }: FormikProps<any>) => (
-                      <Form style={{ display: "flex" }}>
-                        <Field validate={validateMessage} name="messageText">
-                          {({ field, form }: any) => (
-                            <FormControl
-                              isInvalid={
-                                form.errors.messageText &&
-                                form.touched.messageText
-                              }
-                            >
-                              <Input
-                                {...field}
-                                id="messageText"
-                                width="90%"
-                                variant="flushed"
-                                placeholder="send a message"
-                              />
-                              <FormErrorMessage>
-                                {form.errors.messageText}
-                              </FormErrorMessage>
-                            </FormControl>
-                          )}
-                        </Field>
-
-                        <Button
-                          type="submit"
-                          isLoading={isSubmitting}
-                          colorScheme="linkedin"
-                        >
-                          send
-                        </Button>
-                      </Form>
-                    )}
-                  </Formik>
-                </Grid>
-              </Flex>
-            ) : null}
+            <MessagesContainer user={user} messages={messages} />
+            <MessageInputContainer
+              user={user}
+              currentRoom={currentRoom}
+              sendMessage={sendMessage}
+            />
           </Flex>
         )}
       </Grid>
