@@ -62,7 +62,7 @@ const Group: React.FC<groupProps> = ({ defaultGroup }) => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-
+      console.log(await axios.get(`/api/messages/${currentRoom}`));
       const { data } = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/message/getMessages/${currentRoom}`,
         {
