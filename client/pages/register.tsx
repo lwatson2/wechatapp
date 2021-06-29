@@ -6,7 +6,6 @@ import { InputField } from "../components/InputField";
 import { Wrapper } from "../components/Wrapper";
 import { toErrorMap } from "../utils/toErrorMap";
 import { useRouter } from "next/router";
-interface registerProps {}
 
 const Register: React.FC = ({}) => {
   const router = useRouter();
@@ -48,7 +47,7 @@ const Register: React.FC = ({}) => {
               isLoading={isSubmitting}
               colorScheme="teal"
             >
-              login
+              register
             </Button>
           </Form>
         )}

@@ -14,7 +14,6 @@ export default async function handler(
     case "GET":
       try {
         const { group } = req.query;
-        console.log(`req`, group);
 
         Message.find({ group }).then((messagesData) =>
           res.json({ messagesData })

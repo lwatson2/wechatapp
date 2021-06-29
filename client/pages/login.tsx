@@ -9,8 +9,6 @@ import { useRouter } from "next/router";
 import { useContext } from "react";
 import { UserContext } from "../utils/userContext";
 
-interface loginProps {}
-
 const Login: React.FC = ({}) => {
   const { updateUser } = useContext(UserContext);
   const router = useRouter();
