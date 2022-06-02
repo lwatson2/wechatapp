@@ -19,7 +19,7 @@
     "framer-motion": "^4.1.17",
     "js-cookie": "^2.2.1",
     "next": "11.0.0",
-    "npm": "^7.17.0",
+    "npm": "^8.11.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "socket.io-client": "^4.1.2"
